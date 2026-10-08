@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Hack4Gov cybersecurity innovation challenge — unofficial demo portal">
+<title>Hack4Gov | Cybersecurity Innovation Challenge</title>
+<style>
+:root{--bg:#06101d;--surface:#0b1929;--surface2:#102238;--border:#1c3550;--text:#eef7ff;--muted:#8ca5bd;--cyan:#36d9ff;--green:#45e6a2;--yellow:#ffd166;--red:#ff6878}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px Inter,Segoe UI,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}.topbar{background:#040b14;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.topbar .container{height:34px;display:flex;justify-content:space-between;align-items:center}
+header{position:sticky;top:0;z-index:20;background:#06101deb;backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav{height:72px;display:flex;align-items:center;gap:30px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.7px;font-size:18px}
+.brandmark{width:37px;height:37px;border:1px solid var(--cyan);border-radius:8px;display:grid;place-items:center;color:var(--cyan);box-shadow:0 0 20px #36d9ff22}
+.brand span{color:var(--cyan)}nav{display:flex;gap:24px;margin-left:auto}nav a{color:#afc2d6;font-size:14px}nav a:hover,nav a.active{color:white}
+.btn{border:1px solid var(--cyan);background:var(--cyan);color:#03101a;border-radius:7px;padding:11px 16px;font-weight:800}.btn.secondary{background:transparent;color:white;border-color:var(--border)}
+.menu{display:none;background:none;border:0;color:white;font-size:25px}
+.hero{padding:105px 0 90px;background:radial-gradient(circle at 78% 40%,#12314c88,transparent 35%),linear-gradient(#071424,#06101d)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}.kicker{color:var(--green);font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(48px,7vw,86px);line-height:.94;letter-spacing:-4px;margin:18px 0 24px}h1 em{color:var(--cyan);font-style:normal}.lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:680px}
+.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}.stats{display:flex;gap:35px;margin-top:38px}.stats strong{display:block;font-size:25px}.stats small{color:var(--muted)}
+.console{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#06121e;box-shadow:0 25px 80px #0008}.console-head{height:43px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;padding:0 15px}.dot{width:9px;height:9px;border-radius:50%;background:#64798d}.dot.r{background:#ff6474}.dot.y{background:#ffd166}.dot.g{background:#45e6a2}.console-title{margin-left:8px;color:#69829c;font:12px Consolas,monospace}.console-body{padding:25px;font:13px/2 Consolas,monospace;color:#9eb5ca;min-height:370px}.c{color:var(--cyan)}.g{color:var(--green)}.y{color:var(--yellow)}.r{color:var(--red)}
+section{padding:90px 0}.section-title{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}.section-title h2{font-size:39px;letter-spacing:-1.5px;margin:5px 0}.section-title p{max-width:540px;color:var(--muted);line-height:1.6}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{background:linear-gradient(145deg,var(--surface),#081625);border:1px solid var(--border);border-radius:12px;padding:24px;transition:.2s}.card:hover{transform:translateY(-3px);border-color:#36d9ff55}.icon{height:43px;width:43px;display:grid;place-items:center;border:1px solid #36d9ff44;color:var(--cyan);border-radius:8px;margin-bottom:18px;font-weight:900}.card h3{margin:0 0 9px}.card p{color:var(--muted);line-height:1.6;margin:0}.track-top{display:flex;justify-content:space-between;gap:10px}.tag{font-size:10px;color:var(--green);border:1px solid #45e6a244;padding:5px 7px;border-radius:5px;white-space:nowrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.filter{background:var(--surface);color:#a9bdd0;border:1px solid var(--border);border-radius:6px;padding:8px 12px}.filter.active,.filter:hover{border-color:var(--cyan);color:white}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:25px}.timebox{background:#071522;border:1px solid var(--border);padding:17px;text-align:center;border-radius:8px}.timebox strong{font-size:28px;display:block}.timebox span{font-size:10px;color:var(--muted);text-transform:uppercase}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.event{background:var(--surface);border-left:2px solid var(--cyan);padding:17px}.event small{color:var(--cyan)}.event h3{margin:8px 0 5px;font-size:15px}.event p{color:var(--muted);font-size:12px;margin:0;line-height:1.5}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:11px}.board{border-collapse:collapse;width:100%;min-width:650px;background:var(--surface)}th,td{padding:16px;border-bottom:1px solid #17304a;text-align:left}th{color:#6e879f;font-size:10px;letter-spacing:1px;text-transform:uppercase}.rank{color:var(--cyan);font-weight:900}.online{color:var(--green)}
+.cta{border:1px solid #36d9ff3b;background:linear-gradient(120deg,#0b2539,#0a1726);border-radius:16px;text-align:center;padding:52px}.cta h2{font-size:40px;margin:8px 0}.cta p{color:var(--muted);margin-bottom:25px}
+footer{border-top:1px solid var(--border);padding:35px 0;color:#7189a1;font-size:12px}.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:20px;z-index:100}.modal.open{display:grid}.dialog{width:min(540px,100%);background:#0a192a;border:1px solid var(--border);border-radius:13px;padding:27px;box-shadow:0 30px 100px #000}.dialog-head{display:flex;justify-content:space-between;align-items:start}.close{border:0;background:none;color:#9bb0c5;font-size:25px}.field{margin:14px 0}.field label{display:block;font-size:11px;color:#9eb4c8;margin-bottom:6px}.field input,.field select{width:100%;background:#06131f;color:white;border:1px solid var(--border);border-radius:7px;padding:12px;outline:none}.field input:focus,.field select:focus{border-color:var(--cyan)}.error{font-size:12px;color:var(--red);display:none;margin-top:6px}.success{display:none;background:#0b2a24;border:1px solid #45e6a244;color:var(--green);padding:12px;border-radius:7px;margin-top:14px;font-size:13px}
+.dashboard{display:none}.dashboard.show{display:block}.profile{display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--surface);border:1px solid var(--border);padding:20px;border-radius:10px}.pill{padding:7px 9px;border:1px solid #45e6a244;color:var(--green);border-radius:5px;font-size:11px}
+.notice{padding:12px 15px;border:1px solid #36d9ff33;background:#071925;color:#9eb5c9;border-radius:8px;margin-top:18px;font-size:13px}
+@media(max-width:850px){nav,.nav>.btn{display:none}.menu{display:block;margin-left:auto}.hero-grid{grid-template-columns:1fr}.console{display:none}.grid3{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr 1fr}.section-title{display:block}}
+@media(max-width:560px){.grid3{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.stats{gap:17px}.stats strong{font-size:21px}.topbar .container{justify-content:center}.topbar .right{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="container"><span>UNOFFICIAL DEMO PORTAL • NOT AN OFFICIAL GOVERNMENT WEBSITE</span><span class="right">Cybersecurity Innovation Challenge 2026</span></div></div>
+<header><div class="container nav">
+<a class="brand" href="#home"><span class="brandmark">⌁</span>HACK<span>4</span>GOV</a>
+<nav id="nav"><a href="#home" class="active">Home</a><a href="#about">About</a><a href="#challenges">Challenges</a><a href="#schedule">Schedule</a><a href="#leaderboard">Leaderboard</a></nav>
+<button class="btn" onclick="openRegistration()">Register</button><button class="menu" onclick="toggleMenu()">☰</button>
+</div></header>
+
+<main>
+<section class="hero" id="home"><div class="container hero-grid">
+<div><div class="kicker">National Cybersecurity Innovation Challenge · 2026</div>
+<h1>Defend.<br><em>Innovate.</em><br>Protect.</h1>
+<p class="lead">A production-style demo portal for a fictional cybersecurity hackathon. Teams solve simulated security challenges, build defensive technology, and compete on a live-style scoreboard.</p>
+<div class="actions"><button class="btn" onclick="openRegistration()">Register Your Team →</button><a class="btn secondary" href="#challenges">View Challenges</a></div>
+<div class="stats"><div><strong>48H</strong><small>Challenge</small></div><div><strong>12</strong><small>Tracks</small></div><div><strong>₱500K</strong><small>Prize pool</small></div><div><strong id="registeredCount">1,284</strong><small>Participants</small></div></div>
+<div class="countdown"><div class="timebox"><strong id="d">07</strong><span>Days</span></div><div class="timebox"><strong id="h">12</strong><span>Hours</span></div><div class="timebox"><strong id="m">42</strong><span>Minutes</span></div><div class="timebox"><strong id="s">19</strong><span>Seconds</span></div></div>
+</div>
+<div class="console"><div class="console-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="console-title">portal://secure-challenge-terminal</span></div><div class="console-body">
+<span class="g">root@hack4gov</span>:~$ status<br><br>
+<span class="c">[ OK ]</span> Registration service online<br><span class="c">[ OK ]</span> Challenge API online<br><span class="c">[ OK ]</span> Scoring engine online<br><span class="c">[ OK ]</span> Team database connected<br><br>
+<span class="y">[INFO]</span> Registration closes in <span id="terminalDays">07</span> days<br><span class="y">[INFO]</span> Simulated environments ready<br><br>
+<span class="g">STATUS:</span> ALL SYSTEMS OPERATIONAL<br><span class="r">NOTICE:</span> Authorized competition only<br><br>
+<span class="g">root@hack4gov</span>:~$ <span class="c">_</span>
+</div></div>
+</div></section>
+
+<section id="about"><div class="container"><div class="section-title"><div><div class="kicker">About the Event</div><h2>Built like a real cyber program.</h2></div><p>This demo includes realistic portal behavior while keeping all security activity confined to fictional, authorized challenge scenarios.</p></div>
+<div class="grid3"><div class="card"><div class="icon">01</div><h3>Hands-on challenges</h3><p>Web defense, forensics, secure AI, threat intelligence, cryptography and secure coding tracks.</p></div><div class="card"><div class="icon">02</div><h3>Team competition</h3><p>Register a team, choose a track, monitor your score and prepare your final submission.</p></div><div class="card"><div class="icon">03</div><h3>Responsible security</h3><p>All scenarios are simulated. No real government systems, credentials, targets or infrastructure are involved.</p></div></div></div></section>
+
+<section id="challenges"><div class="container"><div class="section-title"><div><div class="kicker">Challenge Catalog</div><h2>Choose your track.</h2></div><p>Filter the challenge catalog and open a track for its details.</p></div>
+<div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="defense">Defense</button><button class="filter" data-filter="analysis">Analysis</button><button class="filter" data-filter="development">Development</button></div>
+<div class="grid3" id="challengeGrid">
+<div class="card challenge" data-type="defense"><div class="track-top"><div><h3>Web Defense</h3><p>Harden a fictional public-service web application against simulated vulnerabilities.</p></div><span class="tag">BLUE</span></div></div>
+<div class="card challenge" data-type="analysis"><div class="track-top"><div><h3>Digital Forensics</h3><p>Analyze simulated artifacts and reconstruct a fictional incident timeline.</p></div><span class="tag">DFIR</span></div></div>
+<div class="card challenge" data-type="development"><div class="track-top"><div><h3>Secure AI</h3><p>Build safety controls for a fictional AI workflow processing sensitive requests.</p></div><span class="tag">AI</span></div></div>
+<div class="card challenge" data-type="analysis"><div class="track-top"><div><h3>Threat Intel</h3><p>Correlate fictional indicators and produce a defensive intelligence brief.</p></div><span class="tag">CTI</span></div></div>
+<div class="card challenge" data-type="analysis"><div class="track-top"><div><h3>Crypto Lab</h3><p>Solve intentionally vulnerable cryptographic puzzles inside the sandbox.</p></div><span class="tag">PUZZLE</span></div></div>
+<div class="card challenge" data-type="development"><div class="track-top"><div><h3>Secure Coding</h3><p>Improve a deliberately vulnerable demo service and document your fixes.</p></div><span class="tag">DEV</span></div></div>
+</div></div></section>
+
+<section id="schedule"><div class="container"><div class="section-title"><div><div class="kicker">Official-style Timeline</div><h2>48 hours. One mission.</h2></div></div>
+<div class="timeline"><div class="event"><small>DAY 01 · 09:00</small><h3>Opening Briefing</h3><p>Rules, teams and challenge environments.</p></div><div class="event"><small>DAY 01 · 12:00</small><h3>Challenge Launch</h3><p>Simulated environments become available.</p></div><div class="event"><small>DAY 02 · 18:00</small><h3>Final Submission</h3><p>Teams submit their defensive solutions.</p></div><div class="event"><small>DAY 03 · 10:00</small><h3>Demo & Awards</h3><p>Final presentations and recognition.</p></div></div></div></section>
+
+<section id="leaderboard"><div class="container"><div class="section-title"><div><div class="kicker">Live-style Scoring</div><h2>Leaderboard.</h2></div><p>Demo scores update when a local participant registers.</p></div>
+<div class="table-wrap"><table class="board"><thead><tr><th>Rank</th><th>Team</th><th>Track</th><th>Points</th><th>Status</th></tr></thead><tbody id="boardBody">
+<tr><td class="rank">01</td><td>Null Guardians</td><td>Web Defense</td><td>9,840</td><td class="online">ONLINE</td></tr>
+<tr><td class="rank">02</td><td>Byte Sentinels</td><td>Digital Forensics</td><td>9,420</td><td class="online">ONLINE</td></tr>
+<tr><td class="rank">03</td><td>Packet Forge</td><td>Threat Intel</td><td>8,975</td><td class="online">ONLINE</td></tr>
+<tr><td class="rank">04</td><td>Zero Trust</td><td>Secure AI</td><td>8,610</td><td class="online">ACTIVE</td></tr>
+</tbody></table></div></div></section>
+
+<section id="dashboard" class="dashboard"><div class="container"><div class="section-title"><div><div class="kicker">Participant Portal</div><h2>Your team.</h2></div></div><div class="profile"><div><strong id="dashTeam">—</strong><div id="dashInfo" style="color:var(--muted);margin-top:6px"></div></div><span class="pill">REGISTERED</span></div><div class="notice">Your registration is stored locally in this browser for this demo. A production portal would send it to a secure backend.</div></div></section>
+
+<section><div class="container"><div class="cta"><div class="kicker">Ready to compete?</div><h2>Enter the arena.</h2><p>Register your fictional team and unlock the participant dashboard.</p><button class="btn" onclick="openRegistration()">Start Registration →</button></div></div></section>
+</main>
+
+<footer><div class="container footer-row"><span>© 2026 Hack4Gov Demo Portal</span><span>UNOFFICIAL • FICTIONAL • AUTHORIZED-SANDBOX CONCEPT</span></div></footer>
+
+<div class="modal" id="modal"><div class="dialog"><div class="dialog-head"><div><div class="kicker">Registration</div><h2 style="margin:5px 0">Create your team</h2></div><button class="close" onclick="closeRegistration()">×</button></div>
+<form id="regForm"><div class="field"><label>Team name</label><input id="team" maxlength="40" required placeholder="e.g. Cyber Sentinels"><div class="error" id="teamError">Enter a team name.</div></div>
+<div class="field"><label>Team captain</label><input id="captain" maxlength="50" required placeholder="Your name"><div class="error" id="captainError">Enter the captain name.</div></div>
+<div class="field"><label>Challenge track</label><select id="track"><option>Web Defense</option><option>Digital Forensics</option><option>Secure AI</option><option>Threat Intelligence</option><option>Crypto Lab</option><option>Secure Coding</option></select></div>
+<button class="btn" style="width:100%">Complete Registration</button><div class="success" id="success">✓ Registration complete. Your participant dashboard is ready.</div></form></div></div>
+
+<script>
+const $=id=>document.getElementById(id), modal=$('modal');
+function openRegistration(){modal.classList.add('open');document.body.style.overflow='hidden';$('team').focus()}
+function closeRegistration(){modal.classList.remove('open');document.body.style.overflow=''}
+modal.addEventListener('click',e=>{if(e.target===modal)closeRegistration()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRegistration()});
+function toggleMenu(){const n=$('nav');n.style.display=n.style.display==='flex'?'none':'flex';n.style.flexDirection='column';n.style.position='absolute';n.style.top='72px';n.style.right='4%';n.style.background='#081625';n.style.padding='16px';n.style.border='1px solid #1c3550';n.style.borderRadius='8px'}
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active')}));
+document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.challenge').forEach(c=>c.style.display=f==='all'||c.dataset.type===f?'block':'none')}));
+function future(){let x=localStorage.getItem('h4gStart');if(!x){x=Date.now()+7*86400000+12*3600000;x=String(x);localStorage.setItem('h4gStart',x)}return +x}
+function countdown(){let diff=Math.max(0,future()-Date.now()),d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;$('d').textContent=String(d).padStart(2,'0');$('h').textContent=String(h).padStart(2,'0');$('m').textContent=String(m).padStart(2,'0');$('s').textContent=String(s).padStart(2,'0');$('terminalDays').textContent=String(d).padStart(2,'0')}
+setInterval(countdown,1000);countdown();
+function renderUser(){
+ const u=JSON.parse(localStorage.getItem('h4gUser')||'null');if(!u)return;
+ $('registeredCount').textContent=(1284+1).toLocaleString();$('dashboard').classList.add('show');$('dashTeam').textContent=u.team;$('dashInfo').textContent=u.captain+' · '+u.track;
+ const tr=document.createElement('tr');tr.innerHTML='<td class="rank">05</td><td></td><td></td><td>0</td><td class="online">REGISTERED</td>';tr.children[1].textContent=u.team;tr.children[2].textContent=u.track;$('boardBody').appendChild(tr)
+}
+$('regForm').addEventListener('submit',e=>{e.preventDefault();let team=$('team').value.trim(),cap=$('captain').value.trim();$('teamError').style.display=team?'none':'block';$('captainError').style.display=cap?'none':'block';if(!team||!cap)return;const u={team,captain:cap,track:$('track').value};localStorage.setItem('h4gUser',JSON.stringify(u));$('success').style.display='block';renderUser();setTimeout(()=>{closeRegistration();location.hash='dashboard'},1000)});
+renderUser();
+</script>
+</body>
+</html>
